@@ -1,0 +1,66 @@
+//<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Moodle configuration loader.
+ *
+ * @package    core
+ * @copyright  2024 Andrew Lyons <andrew@nicols.co.uk>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+//$configfile = __DIR__ . '/../config.php';
+//if (!file_exists($configfile)) {
+//    header("Location: install.php");
+//    die;
+//}
+
+//require($configfile);*
+<?php
+// Moodle public front controller config.
+
+unset($CFG);
+global $CFG;
+$CFG = new stdClass();
+
+// ===== DB 설정 =====
+$CFG->dbtype    = 'pgsql';
+$CFG->dblibrary = 'native';
+$CFG->dbhost    = 'localhost';
+$CFG->dbname    = 'moodle';
+$CFG->dbuser    = 'moodleuser';
+$CFG->dbpass    = '여기에_진짜_DB_비번';
+$CFG->prefix    = 'mdl_';
+$CFG->dboptions = array(
+    'dbpersist' => 0,
+    'dbport' => '',
+    'dbsocket' => '',
+    'dbcollation' => 'utf8mb4_unicode_ci',
+);
+
+// ===== 사이트 경로 =====
+$CFG->wwwroot   = 'http://192.168.219.50';
+$CFG->dirroot   = '/var/www/moodle';          // ← public보다 한 단계 위의 진짜 코드 경로
+$CFG->dataroot  = '/var/www/moodledata';      // ← 우리가 통일한 경로
+
+$CFG->admin     = 'admin';
+
+// 디렉터리 권한 기본값
+$CFG->directorypermissions = 02777;
+
+// 핵심 로딩
+require_once($CFG->dirroot . '/lib/setup.php');
+

@@ -59,6 +59,8 @@ class enrol_fee_plugin extends enrol_plugin {
     public function get_possible_currencies(): array {
         $codes = \core_payment\helper::get_supported_currencies();
 
+	if (!in_array('KRW', $codes, true)) { $codes[] = 'KRW'; }
+
         $currencies = [];
         foreach ($codes as $c) {
             $currencies[$c] = new lang_string($c, 'core_currencies');
